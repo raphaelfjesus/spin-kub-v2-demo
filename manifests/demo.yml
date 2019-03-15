@@ -17,7 +17,7 @@ metadata:
     source: demo
     stack: frontend
     app: spinnaker
-    changed: "false"
+    changed: "true"
 spec:
   replicas: 3
   selector:
