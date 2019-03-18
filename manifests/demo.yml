@@ -71,6 +71,9 @@ metadata:
   name: spinnaker-demo
   namespace: default
 spec:
+  selector:
+    source: demo
+    app: spinnaker
   rules:
   - host: api.demo.local.com.br
     http:
