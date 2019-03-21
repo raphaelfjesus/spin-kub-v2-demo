@@ -75,7 +75,7 @@ metadata:
     app: spinnaker
 spec:
   rules:
-  - host: ${parameters.namespace ?: 'api.demo.local.com.br'}
+  - host: ${parameters.namespace == 'staging' ? 'api.demo.staging.local.com.br' : 'api.demo.local.com.br'}
     http:
       paths:
       - backend:
