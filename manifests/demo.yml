@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
       - name: primary
-        image: index.docker.io/raphaelfjesus/spinnaker-demo:version-3.0.0
+        image: index.docker.io/raphaelfjesus/spin-kub-v2-demo
         ports:
         - containerPort: 8000
         readinessProbe:
