@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
       - name: primary
-        image: index.docker.io/raphaelfjesus/spin-kub-v2-demo
+        image: index.docker.io/raphaelfjesus/spinnaker-demo:version-3.0.0
         ports:
         - containerPort: 8000
         readinessProbe:
@@ -68,6 +68,7 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/ingress.global-static-ip-name: 192.168.100.9
   name: spinnaker-demo
   namespace: '${ parameters.namespace }'
   labels:
