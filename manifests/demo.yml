@@ -7,15 +7,14 @@ data:
   NEW_FEATURE: "true"
 
 ---
-
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   name: spinnaker-demo
   namespace: ${parameters["namespace"]}
   labels:
+    stack: ${parameters["stack"]}
     source: demo
-    stack: frontend
     app: spinnaker
     changed: "false"
 spec:
@@ -27,6 +26,7 @@ spec:
   template:
     metadata:
       labels:
+        stack: ${parameters["stack"]}
         source: demo
         app: spinnaker
     spec:
@@ -44,7 +44,6 @@ spec:
             name: spinnaker-demo-config
 
 ---
-
 kind: Service
 apiVersion: v1
 metadata:
@@ -53,6 +52,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
+    stack: ${parameters["stack"]}
     source: demo
     app: spinnaker
   ports:
@@ -62,7 +62,6 @@ spec:
     targetPort: 8000
 
 ---
-
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -71,14 +70,15 @@ metadata:
   name: spinnaker-demo
   namespace: ${parameters["namespace"]}
   labels:
+    stack: ${parameters["stack"]}
     source: demo
     app: spinnaker
 spec:
   rules:
-  - host: '${parameters["namespace"] == "staging" ? "api.demo.staging.local.com.br" : "api.demo.local.com.br"}'
+  - host: '${parameters["host"]}'
     http:
       paths:
       - backend:
           serviceName: spinnaker-demo
           servicePort: 8000
-        path: /
+        path: ${parameters["context"]}
