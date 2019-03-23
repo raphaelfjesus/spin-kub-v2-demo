@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
       - name: primary
-        image: index.docker.io/raphaelfjesus/spinnaker-demo:'${parameters["image-tag"]}'
+        image: index.docker.io/raphaelfjesus/spinnaker-demo:${parameters["image-tag"]}
         ports:
         - containerPort: 8000
         readinessProbe:
