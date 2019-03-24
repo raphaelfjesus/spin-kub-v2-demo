@@ -13,26 +13,42 @@ metadata:
   name: spinnaker-demo
   namespace: ${parameters["namespace"]}
   labels:
-    stack: ${parameters["stack"]}
-    source: demo
+    ##
+    # Nome da aplicação
     app: spinnaker
-    changed: "false"
+    ##
+    # Equipe responsável pela aplicação. (operators, developers, supports)
+    team: developers
+    ##
+    # Camada que a aplicação pertence. (frontend, backend, database)
+    tier: frontend
+    ##
+    # O estágio ou fase em que a aplicação se encontra. (development, staging, qa, canary, production)
+    phase: ${parameters["phase"]}
+    ##
+    # O número da versão. (por exemplo, 1.0.0)
+    version: ${parameters["version"]}
+    ##
+    # Ambiente em que a aplicação está implantada. (development, staging, production)
+    environment: ${parameters["environment"]}
 spec:
   replicas: 2
   selector:
     matchLabels:
-      source: demo
       app: spinnaker
   template:
     metadata:
       labels:
-        stack: ${parameters["stack"]}
-        source: demo
         app: spinnaker
+        team: developers
+        tier: frontend
+        phase: ${parameters["phase"]}
+        version: ${parameters["version"]}
+        environment: ${parameters["environment"]}
     spec:
       containers:
       - name: primary
-        image: index.docker.io/raphaelfjesus/spinnaker-demo:${parameters["image-tag"]}
+        image: ${parameters["image"]}
         ports:
         - containerPort: 8000
         readinessProbe:
@@ -52,9 +68,12 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    stack: ${parameters["stack"]}
-    source: demo
     app: spinnaker
+    team: developers
+    tier: frontend
+    phase: ${parameters["phase"]}
+    version: ${parameters["version"]}
+    environment: ${parameters["environment"]}
   ports:
   - name: http
     protocol: TCP
@@ -70,9 +89,12 @@ metadata:
   name: spinnaker-demo
   namespace: ${parameters["namespace"]}
   labels:
-    stack: ${parameters["stack"]}
-    source: demo
     app: spinnaker
+    team: developers
+    tier: frontend
+    phase: ${parameters["phase"]}
+    version: ${parameters["version"]}
+    environment: ${parameters["environment"]}
 spec:
   rules:
   - host: '${parameters["host"]}'
